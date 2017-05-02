@@ -1,0 +1,5 @@
+-I../../user_include
+-I../../user_include/hal_interface
+-I../../../Athena/arch/stm32/f3/inc
+-I../../../Athena/arch/stm32/f3/inc/CMSIS
+-I../../../Athena/arch/stm32/f3/inc/Legacy
