@@ -35,19 +35,43 @@ are available throughout the web, on sites like
 [Sparkfun](https://www.sparkfun.com/products/9873) or 
 [Adafruit](https://www.adafruit.com/product/284).
 
-# Command set
+## Command set
 
 Some default commands that are bundled:
 
-- help: Shows available commands/apps installed
+- **help**: Shows available commands/apps installed
 
-- led_ctl: Controls one of two LEDs on the Discovery board
+- **led_ctl**: Controls one of two LEDs on the Discovery board
 
-- time: Shows the system elapsed time in second,microsecond format
+- **time**: Shows the system elapsed time in second,microsecond format
 
-- compfilter: Runs a second-order complementary filter using the onboard 
+- **compfilter**: Runs a second-order complementary filter using the onboard 
 IMU, and displays the roll and pitch of the board
 
-- clear: Clears the terminal buffer
+- **clear**: Clears the terminal buffer
+
+## Usage of API
+
+To create your own application, declare a function with the following prototype:
+
+```C
+void foo(int argc, char** argv)
+{
+	// Your code goes here...
+}
+
+```
+
+Now, register it with the command API as follows:
+
+```C
+if(install_cmd("foo", foo) < 0)
+{
+	printf("Install error in command foo\r\n");
+}
+```
+Obviously, change "foo" to your liking. Also, the function name and the string command name do **not** have to be the same.
+
+Happy hacking!!
 
 (c) Abhimanyu Ghosh, 2017
