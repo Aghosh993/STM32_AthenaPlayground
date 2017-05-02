@@ -18,7 +18,7 @@ OBJCOPY=$(PREFIX)objcopy
 SIZE=$(PREFIX)size
 RM=rm -f
 
-TARGET=f3_shell
+TARGET=f3_shell_demo
 
 SRC=$(wildcard $(ATHENA_PATH)/arch/stm32/f3/src/*.c)
 SRC+=$(wildcard $(ATHENA_PATH)/arch/stm32/f3/src/CMSIS/*.c)
