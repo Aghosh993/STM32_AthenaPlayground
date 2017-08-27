@@ -1,3 +1,6 @@
+[![Build 
+Status](https://travis-ci.org/Aghosh993/STM32_AthenaPlayground.svg?branch=master)](https://travis-ci.org/Aghosh993/STM32_AthenaPlayground)
+
 # STM32_AthenaPlayground
 A repo of various C/C++ projects using the Athena build system applied to the STM32 F3 and F4 discovery boards
 
