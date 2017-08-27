@@ -7,7 +7,7 @@ TOOLCHAIN=$(TOOLCHAIN_ROOT)/bin/
 PREFIX=$(TOOLCHAIN)/arm-none-eabi-
 
 ARCHFLAGS=-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -I$(TOOLCHAIN_ROOT)/arm-none-eabi/include -fsingle-precision-constant 
-CFLAGS=-nostdlib -ffunction-sections -I$(ATHENA_PATH)/arch/stm32/f4/inc/ -I$(ATHENA_PATH)/arch/stm32/f4/inc/CMSIS -I$(ATHENA_PATH)/arch/stm32/f4/inc/Legacy -I./user_include -I./user_include/hal_interface -g -Og -Wall -D'HSE_VALUE=8000000' -DSTM32F407xx -DUSE_HAL_DRIVER
+CFLAGS=-nostdlib -ffunction-sections -I$(ATHENA_PATH)/arch/stm32/f4/inc/ -I$(ATHENA_PATH)/arch/stm32/f4/inc/CMSIS -I$(ATHENA_PATH)/arch/stm32/f4/inc/Legacy -I./user_include -I./user_include/hal_interface -g -O2 -Wall -D'HSE_VALUE=8000000' -DSTM32F407xx -DUSE_HAL_DRIVER
 LDFLAGS=--specs=nosys.specs -Wl,--gc-sections,-Map,$(TARGET).map,-Tlinker.ld
 LDFLAGS+=$(ARCHFLAGS)
 

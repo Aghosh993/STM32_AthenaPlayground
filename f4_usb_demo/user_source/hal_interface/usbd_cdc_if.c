@@ -273,6 +273,7 @@ static int8_t CDC_Receive_FS (uint8_t* Buf, uint32_t *Len)
   {
     USBD_CDC_SetRxBuffer(usb0, &Buf[0]);
     USBD_CDC_ReceivePacket(usb0);
+    board_usb_sendString(Buf, (int)*Len);
   }
   return (USBD_OK);
   /* USER CODE END 6 */ 
