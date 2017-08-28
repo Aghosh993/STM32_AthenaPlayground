@@ -5,6 +5,8 @@ before_install:
 
 env: 
  - TARGET=f3_shell_demo
+ - TARGET=f3_usb_demo
+ - TARGET=FreeRTOS_f3_demo
  - TARGET=f4_usb_demo
 
 script: cd $TARGET && make
