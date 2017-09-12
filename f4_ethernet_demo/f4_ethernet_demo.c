@@ -27,6 +27,10 @@ int main()
    */
   while(1)
   {
+    board_led_on(LED1);
+    cpu_sw_delay(10U);
+    board_led_off(LED1);
+    cpu_sw_delay(10U);
     MX_LWIP_Process();
     // cpu_sw_delay(1); // Need to figure out how to avoid polling, probably DMA or interrupts
   }

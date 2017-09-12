@@ -370,7 +370,6 @@ USBD_StatusTypeDef USBD_LL_DataInStage(USBD_HandleTypeDef *pdev ,uint8_t epnum, 
            (pep->total_length >= pep->maxpacket) &&
              (pep->total_length < pdev->ep0_data_len ))
         {
-          
           USBD_CtlContinueSendData(pdev , NULL, 0);
           pdev->ep0_data_len = 0;
           

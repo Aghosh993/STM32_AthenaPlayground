@@ -7,12 +7,21 @@
 
 #include "cpu_hal_interface.h"
 #include "board_led.h"
-#include "board_usb.h"
+#include "usbd_cdc_if.h"
 
 #include "foo.h"
 
+volatile int data_available;
+volatile int lastRecvLen;
+extern uint8_t UserRxBufferFS[APP_RX_DATA_SIZE];
+extern uint8_t UserTxBufferFS[APP_TX_DATA_SIZE];
+
+/* USB Device Core handle declaration */
+extern USBD_HandleTypeDef hUsbDeviceFS;
+
 int main()
 {
+  data_available = 0;
   /*
     Initialize the PLL, clock tree to all peripherals, flash and Systick 1 ms time reference:
    */
@@ -29,34 +38,27 @@ int main()
   /*
     In an infinite loop, keep toggling the LEDs in an alternating pattern:
    */
+  uint32_t recvBytes = 0;
+  uint8_t rc[100U];
   while(1)
   {
-    /*
-      Carry out a simple unit test of foo() declared in foo.h:
-     */
-    if(TEST_FOO(i, i+1) < 0)
+    if(data_available)
     {
-      /*
-        If the above fails there is either a hardware, code or other undefined error.
-        Now we're in an undefined state regarding processor core behavior...
-       */
-      while(1); // We probably have had a radiation hit or a major malfunction on the ALU of the processor...
-    }
-    else
-    {
-      board_led_on(LED1);
-      board_led_off(LED2);
-
-      cpu_sw_delay(50U);  // Invoke a simple software busy-wait routine to delay approximately 50 milliseconds
-
-      board_led_off(LED1);
-      board_led_on(LED2);
-
-      cpu_sw_delay(50U);
-
-      ++i; // Increment i for the next test iteration...
+      data_available = 0;
+      if(lastRecvLen < 64)
+      {
+        CDC_Transmit_FS(UserRxBufferFS, (uint16_t)lastRecvLen);
+        USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+      }
+      else
+      {
+        CDC_Transmit_FS(UserRxBufferFS, 64U);
+        USBD_CDC_HandleTypeDef *hcdc = (USBD_CDC_HandleTypeDef*)hUsbDeviceFS.pClassData;
+        while(hcdc->TxState);
+        CDC_Transmit_FS(UserRxBufferFS, 0U);
+        USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+      }
     }
   }
-
   return 0;
 }

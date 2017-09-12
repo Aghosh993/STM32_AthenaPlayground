@@ -10,6 +10,7 @@
 #include "usbd_cdc_if.h"
 
 void board_usb_init(void);
+int board_usb_getString(uint8_t *pbuf);
 int board_usb_sendString(uint8_t *pbuf, int len);
 
 #endif

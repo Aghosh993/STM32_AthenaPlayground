@@ -18,7 +18,7 @@ OBJCOPY=$(PREFIX)objcopy
 SIZE=$(PREFIX)size
 RM=rm -f
 
-TARGET=f3_usb_demo
+TARGET=testf3
 
 SRC=$(wildcard $(ATHENA_PATH)/arch/stm32/f3/src/*.c)
 SRC+=$(wildcard $(ATHENA_PATH)/arch/stm32/f3/src/CMSIS/*.c)
@@ -39,8 +39,6 @@ DEPS:=$(OBJ:.o=.d)
 TARGET_DEPS:=$(TARGET_OBJ:.o=.d)
 USER_DEPS:=$(USER_OBJ:.o=.d)
 
-COMPORT=/dev/ttyACM2
-
 all: build size
 build: elf srec bin 
 elf: $(TARGET).elf
@@ -56,10 +54,6 @@ dfu: all
 	dfu-util -a 0 --dfuse-address 0x08000000 -D $(TARGET).bin
 bmp: all
 	$(GDB) --batch --command=runme_bmp.gdb 
-looptest: bmp
-	echo "Loaded firmware, please unplug and plug in the USER USB cable NOW"
-	sleep 7
-	./test_loopback.py -p $(COMPORT) -n 4096
 
 clean:
 	$(RM) $(TARGET_OBJ) $(TARGET).srec $(TARGET).elf $(TARGET).bin $(TARGET).map $(USER_ASM_OBJ) $(USER_OBJ) $(USER_DEPS) $(TARGET_DEPS)

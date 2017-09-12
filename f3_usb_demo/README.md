@@ -1,6 +1,24 @@
 # STM32 F3 Discovery USB CDC Loopback
 
-This demo performs a loopback test using the STM32 F3's USB Device peripheral. The USB USER port on the board is configured as a USB CDC device endpoint, and a simple loopback implemented to echo back user inputs. In addition, the red and blue LEDs on the Discovery board should blink at about 1 Hz.
+This demo performs a loopback test using the STM32 F3's USB Device peripheral. The USB USER port on the board is configured as a USB CDC device endpoint, and a simple loopback implemented to echo back user inputs.
+
+This example has been tested to implement the ZLP (Zero Length Packet) portion of the USB CDC specification. I.e. when perfect multiples of 64 bytes are sent, a zero-length packet is send afterward to demarcate the transfer.
+
+## Loopback tester
+
+The included "test_loopback.py" script can be used with a user-specified COM port and data buffer length to benchmark this demo. The script sends a random string of the specified size and then verifies the contents of the response. On my Linux laptop running Kernel 4.12.3 using the cdc_acm kernel module, I am seeing around 280 kB/second round-trip bandwidth according to the script, using a chunk size of 4096 bytes. As always, YMMV depending on the host operating system and drivers used.
+
+One can invoke the loopback test through the Makefile as well by running:
+
+```bash
+make -j5 && make bmp_looptest
+```
+
+### Note on loaders
+
+The "bmp_looptest" target uses the Black Magic probe target but once can run the above command and replace bmp_looptest with stlink_looptest to use OpenOCD+STLink as the loader. Please note that the COMPORT variable in the Makefile might also have to be changed to match what your host enumerates the COM port as. Also, note that with the STLink target, the board will not auto-reset and this must be done manually by power-cycling the board or pushing the Reset button on the Discovery.
+
+Note that a prompt will appear once the build and firmware flash is finished, asking for the USER USB port to be unplugged and plugged back in again. The Makefile provides 7 seconds for this to occur, before the loopback test proceeds and attempts to open the serial port.
 
 ## Operating System compatibility
 

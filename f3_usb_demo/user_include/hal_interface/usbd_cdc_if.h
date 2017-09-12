@@ -56,6 +56,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_cdc.h"
 /* USER CODE BEGIN INCLUDE */
+#define APP_RX_DATA_SIZE  64
+#define APP_TX_DATA_SIZE  64
 /* USER CODE END INCLUDE */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
