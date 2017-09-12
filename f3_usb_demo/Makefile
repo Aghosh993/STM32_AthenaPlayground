@@ -56,7 +56,11 @@ dfu: all
 	dfu-util -a 0 --dfuse-address 0x08000000 -D $(TARGET).bin
 bmp: all
 	$(GDB) --batch --command=runme_bmp.gdb 
-looptest: bmp
+bmp_looptest: bmp
+	echo "Loaded firmware, please unplug and plug in the USER USB cable NOW"
+	sleep 7
+	./test_loopback.py -p $(COMPORT) -n 4096
+stlink_looptest: load
 	echo "Loaded firmware, please unplug and plug in the USER USB cable NOW"
 	sleep 7
 	./test_loopback.py -p $(COMPORT) -n 4096
