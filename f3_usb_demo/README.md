@@ -8,7 +8,7 @@ This example has been tested to implement the ZLP (Zero Length Packet) portion o
 
 The included "test_loopback.py" script can be used with a user-specified COM port and data buffer length to benchmark this demo. The script sends a random string of the specified size and then verifies the contents of the response. On my Linux laptop running Kernel 4.12.3 using the cdc_acm kernel module, I am seeing around 280 kB/second round-trip bandwidth according to the script, using a chunk size of 4096 bytes. As always, YMMV depending on the host operating system and drivers used.
 
-On my Windows 7 x86 virtual machine, I see a dismal 30 kBytes/second, though that may be correlated to the fact that I'm convolving Linux Kernel USB performance with that of VirtualBox USB passthru, and the Windows CDC ACM stack which is known to have substantially higher overhead for CDC ACM transactions compared to Mac OS X and Linux.
+On my Windows 7 x86 virtual machine, I see a dismal 30 kBytes/second for a 4096-byte block size, though that may be correlated to the fact that I'm convolving Linux Kernel USB performance with that of VirtualBox USB passthru, and the Windows CDC ACM stack which is known to have substantially higher overhead for CDC ACM transactions compared to Mac OS X and Linux.
 
 I do not presently own or have access to an OS X machine to benchmark this code on, but comments/feedback from those that do would be welcome :)
 
